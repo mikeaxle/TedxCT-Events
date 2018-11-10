@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>icn/social-fb</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icn/social-fb" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="Oval" fill="#E62B1E" cx="12" cy="12" r="12"></circle>
+        <path d="M17,7.0804175 L15.3125,7.0804175 C14.1059375,7.0804175 13.625,7.33917257 13.625,8.10722334 L13.625,9.99870777 L17,9.99870777 L16.4375,12.9980617 L13.625,12.9980617 L13.625,21 L9.6875,21 L9.6875,12.9980617 L8,12.9980617 L8,9.99870777 L9.6875,9.99870777 L9.6875,8.10722334 C9.6875,5.70603789 10.5768125,4 13.625,4 C15.257375,4 17,4.51340292 17,4.51340292 L17,7.0804175 Z" id="Path-Copy" fill="#FFFFFF"></path>
+    </g>
+</svg>
