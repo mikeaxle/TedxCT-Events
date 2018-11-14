@@ -7,14 +7,17 @@
 import React, { Component } from 'react'
 import { TouchableHighlight, Text, View, StyleSheet, PixelRatio } from 'react-native'
 
+
 export default class DesignedBy extends Component {
+
+
     render(){
         return(
             <View style={styles.container}>
                 <TouchableHighlight style={styles.button} onPress={() => {}}>
                     <Text style={styles.button_text}>I want an app like this one</Text>
                 </TouchableHighlight>
-                <Text>Designed by <Text style={styles.designText}>Now Boarding Digital</Text></Text>
+                <Text style={styles.normalText}>Designed by <Text style={styles.designText}>Now Boarding Digital</Text></Text>
             </View>
         )
     }
@@ -26,8 +29,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         marginTop: 15 * PixelRatio.get(),
-        paddingLeft: 15 * PixelRatio.get(),
-        paddingRight: 15 * PixelRatio.get(),
+        fontFamily: 'HelveticaNeue',
     },
     button: {
         marginBottom: 5 * PixelRatio.get(),
@@ -40,11 +42,23 @@ const styles = StyleSheet.create({
         borderColor: '#e62b1e'
     },
     button_text: {
+        fontFamily: 'HelveticaNeueBold',
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(7.5),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.19),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
         color: '#e62b1e',
-        fontSize: 15 * PixelRatio.getFontScale()
+    },
+    normalText: {
+        fontFamily: 'HelveticaNeue',
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(5.5),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.09),
+        color: '#000'
+
     },
     designText: {
-        fontWeight: 'bold',
+        fontFamily: 'HelveticaNeueBold',
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(5.5),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.09),
         color: '#000'
     }
 })

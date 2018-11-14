@@ -26,16 +26,18 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     heading: {
-        fontSize: 11,
-        lineHeight: 12,
-        letterSpacing: -0.31
+        fontFamily: 'HelveticaNeueBold',
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(11),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.31)
     },
     title: {
+        fontFamily: 'HelveticaNeue',
         paddingTop: 7 * PixelRatio.get(),
         paddingBottom: 10 * PixelRatio.get(),
-        fontSize: 6.5,
-        lineHeight: 8,
-        letterSpacing: -0.16
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(6.5),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(8),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.16)
 
     },
     map: {

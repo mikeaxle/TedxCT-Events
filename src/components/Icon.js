@@ -5,8 +5,7 @@
  */
 
 import React, { Component } from 'react'
-import { Text, Image, View, StyleSheet, PixelRatio } from 'react-native'
-
+import { Text, Image, View, StyleSheet, PixelRatio, Dimensions } from 'react-native'
 export default class Icon extends Component {
     constructor(props){
         super(props)
@@ -34,7 +33,7 @@ const styles = StyleSheet.create({
     text: {
         fontFamily: 'HelveticaNeueBold',
         color: '#e62b1e',
-        fontSize: 12 * PixelRatio.getFontScale(),
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(5),
         // fontWeight: 'bold',
         letterSpacing: -0.09
     }

@@ -14,19 +14,25 @@ import Programme from '../screens/Programme'
 // create tab navigator
 const TabStack = createMaterialTopTabNavigator({
     About: About,
+    Programme: Programme,
     Partners: Partners,
-    Programme: Programme
+
 }, {
     tabBarOptions: {
         indicatorStyle: {
             color: 'white',
             backgroundColor: 'white'
         },
+        upperCaseLabel: false,
         labelStyle: {
-            // fontSize: 9
+            fontFamily: 'HelveticaNeue',
+            fontSize: PixelRatio.getPixelSizeForLayoutSize(8),
+            lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
+            color: '#fff',
+            margin: 0,
+            padding: 0,
         },
         style: {
-            fontFamily: 'HelveticaNeueBold',
             backgroundColor: '#e62b1e',
         },
     }

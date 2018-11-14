@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         backgroundColor: 'white',
         marginTop: 15 * PixelRatio.get(),
-        paddingBottom: 5.5 * PixelRatio.get()
+        paddingBottom: 5 * PixelRatio.get()
     },
     image: {
         resizeMode: 'cover',
@@ -56,11 +56,12 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     heading: {
-        fontWeight: 'bold',
-        fontSize: 16 * PixelRatio.getFontScale(),
+        fontFamily: 'HelveticaNeueBold',
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(11),
         textAlign: 'center',
         marginTop: 7.5 * PixelRatio.get(),
         marginBottom: 6  * PixelRatio.get(),
+        color: 'black'
     },
     icon_container: {
         flex: 1,

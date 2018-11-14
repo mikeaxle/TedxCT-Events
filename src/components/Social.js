@@ -38,7 +38,11 @@ const styles = StyleSheet.create({
         marginTop: 25 * PixelRatio.get()
     },
     text: {
-        color: 'black'
+        color: 'black',
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(7.5),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.19),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
+        fontFamily: 'HelveticaNeue',
     },
     icon_container: {
         marginTop: 20 * PixelRatio.get(),

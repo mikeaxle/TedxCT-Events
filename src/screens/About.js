@@ -71,7 +71,7 @@ export default class About extends Component {
                     <Social/>
 
                     {/* designed by */}
-                    <DesignedBy/>
+                    <DesignedBy />
 
                 </View>
 
@@ -123,37 +123,37 @@ const styles = StyleSheet.create({
     },
     meta_heading: {
         fontFamily: 'HelveticaNeueBold',
-        fontSize: 8.5,
-        lineHeight: 12,
-        letterSpacing: -0.21
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(8.5),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.21)
     },
     meta_paragraph: {
         fontFamily: 'HelveticaNeue',
-        fontSize: 7.5,
-        lineHeight: 12,
-        letterSpacing: -0.19
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(7.5),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.19)
     },
     meta_link: {
         fontFamily: 'HelveticaNeue',
         color: '#e62b1e',
-        fontSize: 5.5,
-        letterSpacing: -0.09
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(5.5),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.09)
     },
     article: {
-        paddingRight: 16 * PixelRatio.get(),
-        paddingLeft: 16 * PixelRatio.get(),
+        paddingRight: 15 * PixelRatio.get(),
+        paddingLeft: 15 * PixelRatio.get(),
     },
     headerText: {
         fontFamily: 'HelveticaNeueBold',
-        // letterSpacing: -0.5,
-        // lineHeight: 12,
-        fontSize: 18
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.5),
+        // lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(18)
     },
     paragraphText: {
         paddingTop: 15 * PixelRatio.get(),
         fontFamily: 'HelveticaNeue',
-        fontSize: 7.5,
-        letterSpacing: -0.19,
-        lineHeight: 12
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(7.5),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.19),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(12)
     }
 })

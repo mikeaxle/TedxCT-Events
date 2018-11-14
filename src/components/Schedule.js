@@ -104,7 +104,8 @@ export default class Schedule extends Component {
     _renderContent = section => {
         return (
             <View style={styles.content}>
-                <Text style={styles.body}>{section.content} comes here</Text>
+                <Text style={styles.body}>{section.content}</Text>
+                <Image style={styles.bodyImage} source={section.image}/>
             </View>
         );
     };
@@ -227,5 +228,10 @@ const styles = StyleSheet.create({
         // fontSize: 7.5 * 3,
         // lineHeight: 12,
         // letterSpacing: -0.19
+    },
+    bodyImage: {
+        // height: 170 * PixelRatio.get(),
+        paddingTop: 9 * PixelRatio.get(),
+        alignSelf: 'flex-end'
     }
 })

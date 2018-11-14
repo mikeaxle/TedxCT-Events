@@ -24,7 +24,7 @@ export default class MainEvent extends Component {
             <TouchableHighlight onPress={() => Alert.alert('it is ' + this.props.id)}>
                 <ImageBackground source={mainEventImage} style={styles.container}>
                     <View style={styles.icon_container}>
-                        <Icon image={mainEventIcon} text={'11 NOVEMBER 2018'} />
+                        <Icon image={mainEventIcon} text={`11 NOVEMBER 2018`} />
                         <View style={styles.spacer}></View>
                         <Icon image={mainEventIcon2} text={'AVENUE V&A WATERFRONT'} />
                     </View>

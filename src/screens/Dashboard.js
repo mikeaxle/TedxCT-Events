@@ -55,18 +55,20 @@ export default class Dashboard extends Component {
         return (
             <ScrollView>
             <View style={styles.container}>
-
-                    <View style={styles.header}>
-                        <Image source={header} style={styles.header_img}/>
-                    </View>
-                    <MainEvent id={mainEventID} />
-                    <FlatList
-                        contentContainerStyle={ styles.list_container }
-                        data={ dummyData }
-                        renderItem={ ({item}) => this._renderItem({item}) }
-                        keyExtractor={ (item, index) => this._keyExtractor(item, index) } />
-                    <Social />
+                <View style={styles.header}>
+                    <Image source={header} style={styles.header_img}/>
+                </View>
+                <MainEvent id={mainEventID} />
+                <FlatList
+                    contentContainerStyle={ styles.list_container }
+                    data={ dummyData }
+                    renderItem={ ({item}) => this._renderItem({item}) }
+                    keyExtractor={ (item, index) => this._keyExtractor(item, index) } />
+                <Social />
+                <View style={{ paddingHorizontal: 15 * PixelRatio.get() }}>
                     <DesignedBy />
+                </View>
+
             </View>
             </ScrollView>
 
@@ -83,9 +85,9 @@ var dummyData = [
     {
         id: '1',
         image: require('../assets/image/event-salon.png'),
-        title: 'OCEANS 2018',
-        date: '06 DECEMBER 2018',
-        venue: 'V&A WATERFRONT',
+        title: 'Oceans 2018',
+        date: '06 December 2018',
+        venue: 'V&A Waterfront',
         text: 'Charles Darwin and John Dewey give us food for thought with these respective quotes - "It’s not the strongest of the species that survives, nor the most intelligent, but the most responsive to change; We don’t learn through experience, but rather through reflecting on experiences." \n' +
         '\n' +
         'Taking this as inspiration, the theme for the 2018 TEDxCapeTown main event is...\n' +
@@ -100,9 +102,9 @@ var dummyData = [
     {
         id: '2',
         image: require('../assets/image/event-salon.png'),
-        title: 'OCEANS 2018',
-        date: '06 DECEMBER 2018',
-        venue: 'V&A WATERFRONT',
+        title: 'Oceans 2018',
+        date: '06 December 2018',
+        venue: 'V&A Waterfront',
         text: 'Charles Darwin and John Dewey give us food for thought with these respective quotes - "It’s not the strongest of the species that survives, nor the most intelligent, but the most responsive to change; We don’t learn through experience, but rather through reflecting on experiences." \n' +
         '\n' +
         'Taking this as inspiration, the theme for the 2018 TEDxCapeTown main event is...\n' +
@@ -154,7 +156,8 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     list_container: {
-        paddingLeft: 15 * PixelRatio.get(),
-        paddingRight: 15 * PixelRatio.get(),
-    }
+        paddingLeft: 10 * PixelRatio.get(),
+        paddingRight: 10 * PixelRatio.get(),
+    },
+
 })
