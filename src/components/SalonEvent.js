@@ -58,6 +58,8 @@ const styles = StyleSheet.create({
     heading: {
         fontFamily: 'HelveticaNeueBold',
         fontSize: PixelRatio.getPixelSizeForLayoutSize(11),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.31),
         textAlign: 'center',
         marginTop: 7.5 * PixelRatio.get(),
         marginBottom: 6  * PixelRatio.get(),

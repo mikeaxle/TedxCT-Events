@@ -6,7 +6,7 @@
 
 import { createStackNavigator } from 'react-navigation'
 import Dashboard from '../screens/Dashboard'
-// import Event from '../screens/Event'
+import { PixelRatio } from 'react-native'
 import TabStack from '../utils/TabStack'
 
 
@@ -31,7 +31,9 @@ const RootStack =  createStackNavigator({
                 headerTintColor: '#fff',
                 headerTitleStyle: {
                     fontFamily: 'HelveticaNeueBold',
-                    fontWeight: 'bold',
+                    fontSize: PixelRatio.getPixelSizeForLayoutSize(9),
+                    lineHeight: PixelRatio.getPixelSizeForLayoutSize(18),
+
                 },
             }
         }

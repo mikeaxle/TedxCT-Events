@@ -25,7 +25,7 @@ const TabStack = createMaterialTopTabNavigator({
         },
         upperCaseLabel: false,
         labelStyle: {
-            fontFamily: 'HelveticaNeue',
+            fontFamily: 'HelveticaNeueMedium',
             fontSize: PixelRatio.getPixelSizeForLayoutSize(8),
             lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
             color: '#fff',

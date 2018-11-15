@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from 'react'
-import { Text, View, Image, StyleSheet, PixelRatio } from 'react-native'
+import {Text, View, Image, StyleSheet, PixelRatio, TouchableHighlight, Linking, FlatList} from 'react-native'
 import Accordion from 'react-native-collapsible/Accordion';
 
 const SECTIONS = [
@@ -25,6 +25,17 @@ const SECTIONS = [
     }
 ];
 
+const regularSponsors = [
+    require('../assets/image/payfast.png'),
+    require('../assets/image/simpletax.png'),
+    require('../assets/image/proveg.png'),
+    require('../assets/image/storage.png'),
+    require('../assets/image/sharp-music.png'),
+    require('../assets/image/audio-visual-alchemy.png'),
+    require('../assets/image/green-house.png'),
+    require('../assets/image/legalese.png'),
+]
+
 export default class Sponsors extends Component {
     state = {
         activeSections: []
@@ -33,7 +44,7 @@ export default class Sponsors extends Component {
     _renderSectionTitle = section => {
         return (
             <View style={styles.content}>
-                <Text>{section.content}</Text>
+                <Text style={styles.contentText}>{section.content}</Text>
             </View>
         );
     };
@@ -56,8 +67,10 @@ export default class Sponsors extends Component {
     _renderContent = section => {
         return (
             <View style={styles.content}>
-                <Text style={styles.url}>{section.url}</Text>
-                <Text style={styles.body}>{section.content} comes here</Text>
+                <TouchableHighlight onPress={() => Linking.openURL('http://' + section.url)}>
+                    <Text style={styles.url}>{section.url}</Text>
+                </TouchableHighlight>
+                <Text style={styles.body}>{section.content}</Text>
             </View>
         );
     };
@@ -66,29 +79,56 @@ export default class Sponsors extends Component {
         this.setState({ activeSections });
     };
 
+    renderNomralSponsor = ({item, index }) => {
+        return (
+            <View style={styles.regularSponsor}>
+                <Image source={item} style={{ height: 25 * PixelRatio.get(), resizeMode: 'contain'}}/>
+            </View>
+
+        )
+    }
+
     render() {
         return (
-            <Accordion
-                sections={SECTIONS}
-                activeSections={this.state.activeSections}
+            <View style={styles.container}>
+                <Accordion
+                    sections={SECTIONS}
+                    activeSections={this.state.activeSections}
 
-                renderHeader={this._renderHeader}
-                renderContent={this._renderContent}
-                onChange={this._updateSections}
-            />
+                    renderHeader={this._renderHeader}
+                    renderContent={this._renderContent}
+                    onChange={this._updateSections}
+                />
+
+                <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#fefefe'}}>
+                    <View style={[styles.topSegment, { justifyContent:'center'}]}>
+                        <Text style={styles.headerText}>Sponsors</Text>
+                    </View>
+                    <FlatList
+                        data={regularSponsors}
+                        contentContainerStyle={styles.regularSponsorList}
+                        renderItem={this.renderNomralSponsor}
+                        numColumns={2}
+                    />
+                </View>
+            </View>
         );
     }
 }
 
 const icons = {
-    close: require('../assets/icn/back-black.png'),
-    open: require('../assets/icn/back-black-left.png')
+    open: require('../assets/icn/back-black.png'),
+    close: require('../assets/icn/back-black-left.png')
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column'
+    },
     header: {
         flexDirection: 'column',
-        height: 85 * PixelRatio.get(),
+        height: 100 * PixelRatio.get(),
         width: '100%',
         backgroundColor: '#fefefe',
         alignItems: 'center',
@@ -107,7 +147,8 @@ const styles = StyleSheet.create({
     bottomSegment: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+
     },
     headerText: {
         fontFamily: 'HelveticaNeueBold',
@@ -122,22 +163,32 @@ const styles = StyleSheet.create({
         backgroundColor: '#fefefe',
         flex: 1,
         flexDirection: 'column',
-        fontFamily: 'HelveticaNeue',
         paddingHorizontal: 15 * PixelRatio.get(),
     },
     url: {
+        fontFamily: 'HelveticaNeueMedium',
         paddingTop: 7.5 * PixelRatio.get(),
         paddingBottom: 10 * PixelRatio.get(),
         color: '#e62b1e',
-        // fontSize: 7.5 * 3,
-        // lineHeight: 12,
-        // letterSpacing: -0.19
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(7.5),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.19)
     },
     body: {
+        fontFamily: 'HelveticaNeueMedium',
         paddingBottom: 15 * PixelRatio.get(),
         color: '#000',
-        // fontSize: 7.5 * 3,
-        // lineHeight: 12,
-        // letterSpacing: -0.19
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(7.5),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.19)
+    },
+    regularSponsorList: {
+        flex: 1,
+    },
+    regularSponsor: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 20 * PixelRatio.get()
     }
 })

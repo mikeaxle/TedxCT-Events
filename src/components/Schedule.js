@@ -5,12 +5,21 @@
  */
 
 import React, {Component} from 'react'
-import {Text, View, Image, StyleSheet, PixelRatio} from 'react-native'
+import {
+    Text,
+    View,
+    Image,
+    StyleSheet,
+    PixelRatio,
+    ImageBackground,
+    Linking,
+    TouchableWithoutFeedback
+} from 'react-native'
 import Accordion from 'react-native-collapsible/Accordion';
 
 var SECTIONS = [
     {
-        title: 'How to buy an island',
+        title: 'How to buy an Island',
         speaker: 'Sam Beckbessinger',
         date: 'Sun, 11 November 2018',
         time: '09:30',
@@ -31,7 +40,9 @@ var SECTIONS = [
         'What\'s your favourite TED/ TEDx talk?\n' +
         '\n' +
         'Mary Roach\'s ‘10 things you didn\'t know about the orgasm’.',
-        social: '@beckbessinger',
+        social: {
+            twitter: 'beckbessinger'
+        },
         image: require('../assets/image/speaker-Sam.png')
     },
 ];
@@ -48,6 +59,58 @@ class Line extends Component {
                 width: 1 * PixelRatio.get(),
                 height: this.props.height * PixelRatio.get()
             }}/>
+        )
+    }
+}
+
+class SocialSpeaker extends Component {
+    constructor(props) {
+        super(props)
+    }
+
+    fbIcon() {
+        if (this.props.facebook === undefined) {
+            return null
+        }
+
+        return (
+            <TouchableWithoutFeedback onPress={() => Linking.openURL('https://facebook.com/' + this.props.facebook)}>
+                <Image style={styles.iconSocial} source={icons.facebook}/>
+            </TouchableWithoutFeedback>
+        )
+    }
+
+    twitterIcon() {
+        if (this.props.twitter === undefined) {
+            return null
+        }
+
+        return (
+            <TouchableWithoutFeedback onPress={() => Linking.openURL('https://twitter.com/' + this.props.twitter)}>
+                <Image style={styles.iconSocial} source={icons.twitter}/>
+            </TouchableWithoutFeedback>
+        )
+    }
+
+    igIcon() {
+        if (this.props.instagram === undefined) {
+            return null
+        }
+
+        return (
+            <TouchableWithoutFeedback onPress={() => Linking.openURL('https://instagram.com/' + this.props.instagram)}>
+                <Image style={styles.iconSocial} source={icons.instagram}/>
+            </TouchableWithoutFeedback>
+        )
+    }
+
+    render() {
+        return (
+            <View style={styles.bodySocial}>
+                {this.fbIcon()}
+                {this.twitterIcon()}
+                {this.igIcon()}
+            </View>
         )
     }
 }
@@ -88,13 +151,14 @@ export default class Schedule extends Component {
                 <View style={styles.rightSegment}>
                     {/* top */}
                     <View style={styles.topSegment}>
-                        <Text style={ isActive ? styles.headerTextActive : styles.headerText}>{section.title}</Text>
-                        <Image source={isActive ? icons.close : icons.open}/>
+                        <Text style={isActive ? styles.headerTextActive : styles.headerText}>{section.title}</Text>
+                        <Image style={styles.icon} source={isActive ? icons.close : icons.open}/>
                     </View>
 
                     {/* bottom */}
                     <View style={styles.bottomSegment}>
-                        <Text style={ isActive ? styles.subHeaderTextActive : styles.subHeaderText}>{section.speaker}</Text>
+                        <Text
+                            style={isActive ? styles.subHeaderTextActive : styles.subHeaderText}>{section.speaker}</Text>
                     </View>
                 </View>
             </View>
@@ -105,7 +169,9 @@ export default class Schedule extends Component {
         return (
             <View style={styles.content}>
                 <Text style={styles.body}>{section.content}</Text>
-                <Image style={styles.bodyImage} source={section.image}/>
+                <ImageBackground style={styles.bodyImage} source={section.image}>
+                    <SocialSpeaker twitter={section.social.twitter}/>
+                </ImageBackground>
             </View>
         );
     };
@@ -116,39 +182,99 @@ export default class Schedule extends Component {
 
     render() {
         return (
-            <Accordion
-                sections={SECTIONS}
-                activeSections={this.state.activeSections}
+            <View style={styles.container}>
 
-                renderHeader={this._renderHeader}
-                renderContent={this._renderContent}
-                onChange={this._updateSections}
-            />
+                <View style={styles.programHeader}>
+                    <View style={[styles.leftSegment, {paddingLeft: 11 * PixelRatio.get()}]}>
+                        <Image source={icons.programme} style={styles.programIcon} imageStyle={{resizeMode: 'center'}}/>
+                        <Line height={60 - 18}/>
+                    </View>
+                    <View style={styles.rightSegment}>
+                        <Text style={styles.programHeaderText}>Programme</Text>
+                        <Text style={styles.programHeaderDate}>{this.props.date}</Text>
+                    </View>
+                </View>
+
+                <Accordion
+                    sections={SECTIONS}
+                    activeSections={this.state.activeSections}
+
+                    renderHeader={this._renderHeader}
+                    renderContent={this._renderContent}
+                    onChange={this._updateSections}
+                />
+
+                <View style={styles.programFooter}>
+                    <View style={[styles.leftSegment]}>
+                        <Line height={15}/>
+                        <View style={styles.programFooterSquareContainer}>
+                            <View style={styles.programFooterSquare}></View>
+                        </View>
+
+                    </View>
+                    <View style={styles.rightSegment}>
+                        <Text style={styles.programFooterText}>Thanks for watching!</Text>
+                    </View>
+                </View>
+            </View>
+
         );
     }
 }
 
 const icons = {
     open: require('../assets/icn/back-on-dark.png'),
-    close: require('../assets/icn/back-black-left.png')
+    close: require('../assets/icn/back-black-left.png'),
+    programme: require('../assets/image/pause_effect-icon.png'),
+    facebook: require('../assets/icn/social-fb.png'),
+    twitter: require('../assets/icn/social-tweet.png'),
+    instagram: require('../assets/icn/social-instagram.png')
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column'
+    },
+    programHeader: {
+        flex: 1,
+        flexDirection: 'row',
+        // alignItems: 'flex-end',
+        height: 60 * PixelRatio.get(),
+        paddingTop: 21 * PixelRatio.get(),
+        backgroundColor: '#171717',
+    },
+    programIcon: {
+        height: 18 * PixelRatio.get(),
+        width: 18 * PixelRatio.get(),
+        resizeMode: 'contain'
+    },
+    programHeaderText: {
+        fontFamily: 'HelveticaNeueBold',
+        color: 'white',
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(14),
+        // lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.39),
+    },
+    programHeaderDate: {
+        fontFamily: 'HelveticaNeueBold',
+        color: '#e62b1e',
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(8.5),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.21),
+
+    },
     header: {
         flexDirection: 'row',
         height: 48 * PixelRatio.get(),
         backgroundColor: '#171717',
-        // alignItems: 'center',
         paddingHorizontal: 10 * PixelRatio.get(),
-        // elevation: 7,
     },
     headerActive: {
         flexDirection: 'row',
         height: 48 * PixelRatio.get(),
-        backgroundColor: '#fefefe',
-        // alignItems: 'center',
+        backgroundColor: '#f8f8f8',
         paddingHorizontal: 10 * PixelRatio.get(),
-        // elevation: 7,
     },
     rightSegment: {
         flex: 1,
@@ -156,7 +282,6 @@ const styles = StyleSheet.create({
         marginLeft: 5 * PixelRatio.get(),
     },
     leftSegment: {
-
         flexDirection: 'column',
         alignItems: 'center',
     },
@@ -173,14 +298,14 @@ const styles = StyleSheet.create({
     time_text: {
         color: '#fff',
         fontFamily: 'HelveticaNeueBold',
-        // fontSize: 6,
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(6),
         letterSpacing: 0,
     },
     topSegment: {
         paddingTop: 10 * PixelRatio.get(),
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        // justifyContent: 'space-between'
     },
     bottomSegment: {
         paddingTop: 4 * PixelRatio.get(),
@@ -188,50 +313,100 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontFamily: 'HelveticaNeueBold',
-        letterSpacing: 0,
+        flexWrap: 'wrap',
         color: '#fff',
-        fontSize: 11 * 2,
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(11),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.31),
     },
     subHeaderText: {
-        fontFamily: 'HelveticaNeue',
-        letterSpacing: -0.19,
-        // lineHeight: 12,
+        fontFamily: 'HelveticaNeueMedium',
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.19),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
         color: '#fff',
-        fontSize: 7.5 * 2,
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(7.5),
     },
     headerTextActive: {
         fontFamily: 'HelveticaNeueBold',
-        letterSpacing: 0,
+        flexWrap: 'wrap',
         color: '#e62b1e',
-        fontSize: 11 * 2,
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(11),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.31),
     },
     subHeaderTextActive: {
-        fontFamily: 'HelveticaNeue',
-        letterSpacing: -0.19,
-        // lineHeight: 12,
+        fontFamily: 'HelveticaNeueMedium',
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.19),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
         color: '#000',
-        fontSize: 7.5 * 2,
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(7.5),
+    },
+    icon: {
+        marginLeft: 'auto',
+        left: 5 * PixelRatio.get(),
     },
     spacer: {
         padding: 5 * PixelRatio.get()
     },
     content: {
-        backgroundColor: '#fefefe',
+        backgroundColor: '#f8f8f8',
         flex: 1,
         flexDirection: 'column',
-        fontFamily: 'HelveticaNeue',
+
     },
     body: {
+        fontFamily: 'HelveticaNeueMedium',
         paddingLeft: 35 * PixelRatio.get(),
         paddingRight: 15 * PixelRatio.get(),
         color: '#000',
-        // fontSize: 7.5 * 3,
-        // lineHeight: 12,
-        // letterSpacing: -0.19
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(7.5),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.19)
+    },
+    bodySocial: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginBottom: 9.5 * PixelRatio.get(),
+        marginRight: 15 * PixelRatio.get(),
     },
     bodyImage: {
-        // height: 170 * PixelRatio.get(),
+        width: '100%',
+        height: 150 * PixelRatio.get(),
         paddingTop: 9 * PixelRatio.get(),
-        alignSelf: 'flex-end'
+        resizeMode: 'contain',
+        alignSelf: 'flex-end',
+        justifyContent: 'flex-end'
+
+    },
+    iconSocial: {
+        height: 17.5 * PixelRatio.get(),
+        width: 17.5 * PixelRatio.get(),
+        resizeMode: 'contain',
+        marginLeft: 12.5 * PixelRatio.get()
+
+    },
+    programFooter: {
+        flex: 1,
+        flexDirection: 'row',
+        paddingHorizontal: 10 * PixelRatio.get(),
+        backgroundColor: 'black',
+    },
+    programFooterSquareContainer: {
+        width: 20  * PixelRatio.get(),
+        alignItems: 'center',
+    },
+    programFooterSquare: {
+        height: 7 * PixelRatio.get(),
+        width: 7 * PixelRatio.get(),
+        backgroundColor: '#e62b1e'
+    },
+    programFooterText: {
+        marginTop: 15 * PixelRatio.get(),
+        fontFamily: 'HelveticaNeueMedium',
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(8.5),
+        lineHeight: PixelRatio.getPixelSizeForLayoutSize(8),
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.21),
+        color: 'white'
+
     }
 })

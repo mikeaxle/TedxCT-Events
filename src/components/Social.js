@@ -5,17 +5,37 @@
  */
 
 import React, { Component } from 'react'
-import {View, Text, Image, StyleSheet, PixelRatio } from 'react-native'
+import {
+    View,
+    Text,
+    Image,
+    StyleSheet,
+    PixelRatio,
+    Linking,
+    TouchableWithoutFeedback
+} from 'react-native'
 
 export default class Social extends Component {
+    constructor(props){
+        super(props)
+    }
+
     render(){
         return(
             <View style={styles.container}>
-                <Text style={styles.text}>Follow TEDx CapeTown</Text>
+                <Text style={[styles.text, { color: this.props.color }]}>Follow TEDx CapeTown</Text>
                 <View style={styles.icon_container}>
-                    <Image style={styles.icon} source={icons.facebook}/>
-                    <Image style={styles.icon} source={icons.twitter}/>
-                    <Image style={styles.icon} source={icons.instagram}/>
+                    <TouchableWithoutFeedback onPress={() => Linking.openURL('https://www.facebook.com/TEDxCapeTown/')}>
+                        <Image style={styles.icon} source={icons.facebook}/>
+                    </TouchableWithoutFeedback>
+
+                    <TouchableWithoutFeedback onPress={() => Linking.openURL('https://twitter.com/tedxcapetown')}>
+                        <Image style={styles.icon} source={icons.twitter}/>
+                    </TouchableWithoutFeedback>
+
+                    <TouchableWithoutFeedback onPress={() => Linking.openURL('https://www.instagram.com/tedxcapetown/')}>
+                        <Image style={styles.icon} source={icons.instagram}/>
+                    </TouchableWithoutFeedback>
                 </View>
             </View>
         )
@@ -38,11 +58,10 @@ const styles = StyleSheet.create({
         marginTop: 25 * PixelRatio.get()
     },
     text: {
-        color: 'black',
         fontSize: PixelRatio.getPixelSizeForLayoutSize(7.5),
         letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.19),
         lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
-        fontFamily: 'HelveticaNeue',
+        fontFamily: 'HelveticaNeueMedium',
     },
     icon_container: {
         marginTop: 20 * PixelRatio.get(),

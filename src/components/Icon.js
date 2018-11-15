@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     text: {
         fontFamily: 'HelveticaNeueBold',
         color: '#e62b1e',
-        fontSize: PixelRatio.getPixelSizeForLayoutSize(5),
+        fontSize: PixelRatio.getPixelSizeForLayoutSize(5.5),
         // fontWeight: 'bold',
-        letterSpacing: -0.09
+        letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.09)
     }
 })

@@ -5,7 +5,7 @@
  */
 
 
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import {View, Text, Image, StyleSheet, PixelRatio, ScrollView, FlatList, Alert, Button} from 'react-native'
 import MainEvent from '../components/MainEvent'
 import SalonEvent from '../components/SalonEvent'
@@ -14,7 +14,7 @@ import DesignedBy from '../components/DesignedBy'
 
 export default class Dashboard extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
     }
 
@@ -27,12 +27,12 @@ export default class Dashboard extends Component {
      */
     _renderItem = ({item}) => (
         <SalonEvent
-            onPressItem = {() => this.props.navigation.navigate('Event', { item: item })}
-            id = {item.id}
-            image = {item.image}
-            title = {item.title}
-            date = {item.date}
-            venue = {item.venue}
+            onPressItem={() => this.props.navigation.navigate('Event', {item: item})}
+            id={item.id}
+            image={item.image}
+            title={item.title}
+            date={item.date}
+            venue={item.venue}
         />)
 
     /**
@@ -51,28 +51,25 @@ export default class Dashboard extends Component {
      * Returns JSX
      * @returns {*}
      */
-    render(){
+    render() {
         return (
-            <ScrollView>
             <View style={styles.container}>
-                <View style={styles.header}>
-                    <Image source={header} style={styles.header_img}/>
-                </View>
-                <MainEvent id={mainEventID} />
-                <FlatList
-                    contentContainerStyle={ styles.list_container }
-                    data={ dummyData }
-                    renderItem={ ({item}) => this._renderItem({item}) }
-                    keyExtractor={ (item, index) => this._keyExtractor(item, index) } />
-                <Social />
-                <View style={{ paddingHorizontal: 15 * PixelRatio.get() }}>
-                    <DesignedBy />
-                </View>
-
+                <ScrollView>
+                    <View style={styles.header}>
+                        <Image source={header} style={styles.header_img}/>
+                    </View>
+                    <MainEvent id={mainEventID}/>
+                    <FlatList
+                        contentContainerStyle={styles.list_container}
+                        data={dummyData}
+                        renderItem={({item}) => this._renderItem({item})}
+                        keyExtractor={(item, index) => this._keyExtractor(item, index)}/>
+                    <Social color={'black'}/>
+                    <View style={{paddingHorizontal: 15 * PixelRatio.get(), marginBottom: 24.5 * PixelRatio.get()}}>
+                        <DesignedBy color={'black'}/>
+                    </View>
+                </ScrollView>
             </View>
-            </ScrollView>
-
-
         )
     }
 }
@@ -85,9 +82,14 @@ var dummyData = [
     {
         id: '1',
         image: require('../assets/image/event-salon.png'),
-        title: 'Oceans 2018',
-        date: '06 December 2018',
-        venue: 'V&A Waterfront',
+        title: 'Pause & Effect',
+        date: '11 November 2018',
+        venue: 'Avenue V&A Waterfront',
+        location: {
+            latitude: -33.907835,
+            longitude: 18.4168136
+        },
+        buyTicketsLink: 'https://www.quicket.co.za/events/61870-tedxcapetownwomen-showing-up/#/',
         text: 'Charles Darwin and John Dewey give us food for thought with these respective quotes - "It’s not the strongest of the species that survives, nor the most intelligent, but the most responsive to change; We don’t learn through experience, but rather through reflecting on experiences." \n' +
         '\n' +
         'Taking this as inspiration, the theme for the 2018 TEDxCapeTown main event is...\n' +
@@ -105,6 +107,7 @@ var dummyData = [
         title: 'Oceans 2018',
         date: '06 December 2018',
         venue: 'V&A Waterfront',
+        buyTicketsLink: 'https://www.quicket.co.za/events/61870-tedxcapetownwomen-showing-up/#/',
         text: 'Charles Darwin and John Dewey give us food for thought with these respective quotes - "It’s not the strongest of the species that survives, nor the most intelligent, but the most responsive to change; We don’t learn through experience, but rather through reflecting on experiences." \n' +
         '\n' +
         'Taking this as inspiration, the theme for the 2018 TEDxCapeTown main event is...\n' +
@@ -122,6 +125,7 @@ var dummyData = [
         title: 'OCEANS 2018',
         date: '06 DECEMBER 2018',
         venue: 'V&A WATERFRONT',
+        buyTicketsLink: 'https://www.quicket.co.za/events/61870-tedxcapetownwomen-showing-up/#/',
         text: `Charles Darwin and John Dewey give us food for thought with these respective quotes - "It’s not the strongest of the species that survives, nor the most intelligent, but the most responsive to change; We don’t learn through experience, but rather through reflecting on experiences." 
 
 Taking this as inspiration, the theme for the 2018 TEDxCapeTown main event is...
@@ -141,23 +145,24 @@ var header = require('../assets/logo/tedx-cptown.png')
 //styles
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
+        flex: 1,
         backgroundColor: '#f7f9fa',
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        paddingBottom: 24.5 * PixelRatio.get()
+
     },
     header: {
         margin: 15 * PixelRatio.get()
     },
     header_img: {
-        height: 32 * PixelRatio.get(),
-        width: 91 * PixelRatio.get(),
+        flex: 0.5,
+        // height: 32 * PixelRatio.get(),
+        // width: 91 * PixelRatio.get(),
         resizeMode: 'contain'
     },
     list_container: {
-        paddingLeft: 10 * PixelRatio.get(),
-        paddingRight: 10 * PixelRatio.get(),
+        paddingLeft: 15 * PixelRatio.get(),
+        paddingRight: 15 * PixelRatio.get(),
     },
 
 })
