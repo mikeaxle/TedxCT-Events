@@ -73,6 +73,6 @@ const styles = StyleSheet.create({
         marginRight: 8.75 * PixelRatio.get(),
         height: 15 * PixelRatio.get(),
         width: 15 * PixelRatio.get(),
-        resizeMode: 'contain'
+        // resizeMode: 'contain'
     }
 })

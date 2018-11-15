@@ -15,18 +15,22 @@ export default class MainEvent extends Component {
         super(props)
     }
 
+    _onPress(){
+        this.props.onPressItem()
+    }
+
     /**
      * Returns JSX
      * @returns {*}
      */
     render(){
         return(
-            <TouchableHighlight onPress={() => Alert.alert('it is ' + this.props.id)}>
-                <ImageBackground source={mainEventImage} style={styles.container}>
+            <TouchableHighlight onPress={this._onPress.bind(this)}>
+                <ImageBackground source={this.props.item.image} style={styles.container}>
                     <View style={styles.icon_container}>
-                        <Icon image={mainEventIcon} text={`11 NOVEMBER 2018`} />
+                        <Icon image={mainEventIcon} text={this.props.item.date.toUpperCase()} />
                         <View style={styles.spacer}></View>
-                        <Icon image={mainEventIcon2} text={'AVENUE V&A WATERFRONT'} />
+                        <Icon image={mainEventIcon2} text={this.props.item.venue.toUpperCase()} />
                     </View>
                 </ImageBackground>
             </TouchableHighlight>

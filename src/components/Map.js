@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Text, View, PixelRatio, StyleSheet} from 'react-native'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+// import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
 export default class Map extends Component {
     constructor(props) {
@@ -13,17 +13,17 @@ export default class Map extends Component {
                 <Text style={styles.heading}>Map</Text>
                 <Text style={styles.title}>{this.props.address}</Text>
                 <View style={styles.map}>
-                    <MapView
-                        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                        style={styles.mapView}
-                        region={{
-                            latitude: this.props.coordinates.latitude,
-                            longitude: this.props.coordinates.longitude,
-                            latitudeDelta: 0.015,
-                            longitudeDelta: 0.0121,
-                        }}
-                    >
-                    </MapView>
+                    {/*<MapView*/}
+                        {/*provider={PROVIDER_GOOGLE} // remove if not using Google Maps*/}
+                        {/*style={styles.mapView}*/}
+                        {/*region={{*/}
+                            {/*latitude: this.props.coordinates.latitude,*/}
+                            {/*longitude: this.props.coordinates.longitude,*/}
+                            {/*latitudeDelta: 0.015,*/}
+                            {/*longitudeDelta: 0.0121,*/}
+                        {/*}}*/}
+                    {/*>*/}
+                    {/*</MapView>*/}
                 </View>
             </View>
         )
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
         marginTop: 15 * PixelRatio.get(),
         flex: 1,
         flexDirection: 'column',
+        backgroundColor: 'teal'
     },
     heading: {
         fontFamily: 'HelveticaNeueBold',

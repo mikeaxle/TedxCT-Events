@@ -58,12 +58,12 @@ export default class Dashboard extends Component {
                     <View style={styles.header}>
                         <Image source={header} style={styles.header_img}/>
                     </View>
-                    <MainEvent id={mainEventID}/>
-                    <FlatList
-                        contentContainerStyle={styles.list_container}
-                        data={dummyData}
-                        renderItem={({item}) => this._renderItem({item})}
-                        keyExtractor={(item, index) => this._keyExtractor(item, index)}/>
+                    <MainEvent item={mainEvent} onPressItem={() => this.props.navigation.navigate('Event', {item: mainEvent})}/>
+                    {/*<FlatList*/}
+                        {/*contentContainerStyle={styles.list_container}*/}
+                        {/*data={dummyData}*/}
+                        {/*renderItem={({item}) => this._renderItem({item})}*/}
+                        {/*keyExtractor={(item, index) => this._keyExtractor(item, index)}/>*/}
                     <Social color={'black'}/>
                     <View style={{paddingHorizontal: 15 * PixelRatio.get(), marginBottom: 24.5 * PixelRatio.get()}}>
                         <DesignedBy color={'black'}/>
@@ -74,14 +74,13 @@ export default class Dashboard extends Component {
     }
 }
 
-// main event ID
-var mainEventID = 0
+// main event
 
 // dummy data
 var dummyData = [
     {
         id: '1',
-        image: require('../assets/image/event-salon.png'),
+        image: require('../assets/image/event-main.png'),
         title: 'Pause & Effect',
         date: '11 November 2018',
         venue: 'Avenue V&A Waterfront',
@@ -139,6 +138,8 @@ We invite design thinkers, artists, activists, people managers, youth developmen
     },
 ]
 
+var mainEvent = dummyData[0]
+
 // header image
 var header = require('../assets/logo/tedx-cptown.png')
 
@@ -155,9 +156,8 @@ const styles = StyleSheet.create({
         margin: 15 * PixelRatio.get()
     },
     header_img: {
-        flex: 0.5,
-        // height: 32 * PixelRatio.get(),
-        // width: 91 * PixelRatio.get(),
+        height: (32 * PixelRatio.get()) * 1.2,
+        width: (91 * PixelRatio.get()) * 1.2,
         resizeMode: 'contain'
     },
     list_container: {
