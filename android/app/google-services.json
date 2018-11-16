@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "142262855760",
+    "firebase_url": "https://tedxct-7f77a.firebaseio.com",
+    "project_id": "tedxct-7f77a",
+    "storage_bucket": "tedxct-7f77a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:142262855760:android:e4ef59cbf487dabc",
+        "android_client_info": {
+          "package_name": "com.tedxct"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "142262855760-uq4g0s2t5041a8ilk01tu9oj16n111f5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgaIrec9R2f7C4vI29_SGfy8MBLwe8mmI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

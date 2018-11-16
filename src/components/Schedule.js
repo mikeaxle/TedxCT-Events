@@ -19,6 +19,7 @@ import {
 } from 'react-native'
 
 import Accordion from 'react-native-collapsible/Accordion';
+import AutoHeightImage from 'react-native-auto-height-image';
 
 
 class Line extends Component {
@@ -90,6 +91,55 @@ class SocialSpeaker extends Component {
     }
 }
 
+// const remote = require('../assets/image/speaker-rich-mulholland.png');
+// const text = 'I am some text here'
+//
+// class SpeakerImage extends Component {
+//     constructor(props) {
+//         super(props)
+//     }
+//
+//     render() {
+//         return (
+//             <View style={{ flex: 1, backgroundColor: '#eee', }}>
+//                 <View
+//                     style={{
+//                         position: 'absolute',
+//                         top: 0,
+//                         left: 0,
+//                         width: '100%',
+//                         height: '100%',
+//                     }}
+//                 >
+//                     <Image
+//                         style={{
+//                             flex: 1,
+//                             resizeMode: 'cover',
+//                         }}
+//                         source={remote}
+//                     />
+//                 </View>
+//                 <View
+//                     style={{
+//                         flex: 1,
+//                         backgroundColor: 'transparent',
+//                         justifyContent: 'center',
+//                     }}
+//                 >
+//                     <Text
+//                         style={{
+//                             textAlign: 'center',
+//                             fontSize: 30,
+//                         }}
+//                     >
+//                         {text}
+//                     </Text>
+//                 </View>
+//             </View>
+//         )
+//     }
+// }
+
 export default class Schedule extends Component {
     constructor(props) {
         super(props)
@@ -102,14 +152,58 @@ export default class Schedule extends Component {
     }
 
     _renderSectionTitle = section => {
-        return (
-            <View style={styles.content}>
-                <Text>{section.content}</Text>
-            </View>
-        );
+        if(section.isHeading){
+            return (
+                <View style={styles.header}>
+
+                    {/* left */}
+                    <View style={styles.leftSegment}>
+
+                        {/* red line*/}
+                        <Line height={13}/>
+
+                        {/* time */}
+                        <View style={styles.time}>
+                            <Text style={styles.time_text}>{section.time}</Text>
+                        </View>
+
+                        {/* red line */}
+                        <Line height={(styles.header.height / PixelRatio.get()) - 19}/>
+                    </View>
+
+                    {/* right*/}
+                    <View style={styles.rightSegment}>
+                        {/* top */}
+                        <View style={styles.topSegment}>
+                            <Text style={styles.headerText}>{section.title}</Text>
+                            {/*<View style={{ margin: 5 * PixelRatio.get() }}/>*/}
+                            <View style={styles.icon}>
+                                {/*<Image source={isActive ? icons.close : icons.open}/>*/}
+                            </View>
+
+                            {/*<View style={{ margin: 5 * PixelRatio.get() }}/>*/}
+                        </View>
+
+                        {/* bottom */}
+                        <View style={styles.bottomSegment}>
+                            <Text
+                                style={styles.subHeaderText}>{section.speaker}</Text>
+                        </View>
+                    </View>
+                </View>
+            )
+        }
+
+        return null
+
     };
 
     _renderHeader = (section, index, isActive, sections) => {
+
+        if(section.isHeading) {
+            return <View></View>
+        }
+
         return (
             <View style={isActive ? styles.headerActive : styles.header}>
 
@@ -117,7 +211,7 @@ export default class Schedule extends Component {
                 <View style={styles.leftSegment}>
 
                     {/* red line*/}
-                    <Line height={12}/>
+                    <Line height={13}/>
 
                     {/* time */}
                     <View style={styles.time}>
@@ -133,7 +227,12 @@ export default class Schedule extends Component {
                     {/* top */}
                     <View style={styles.topSegment}>
                         <Text style={isActive ? styles.headerTextActive : styles.headerText}>{section.title}</Text>
-                        <Image style={styles.icon} source={isActive ? icons.close : icons.open}/>
+                        {/*<View style={{ margin: 5 * PixelRatio.get() }}/>*/}
+                        <View style={styles.icon}>
+                            <Image source={isActive ? icons.close : icons.open}/>
+                        </View>
+
+                        {/*<View style={{ margin: 5 * PixelRatio.get() }}/>*/}
                     </View>
 
                     {/* bottom */}
@@ -147,14 +246,22 @@ export default class Schedule extends Component {
     };
 
     _renderContent = section => {
+        if(section.image === undefined){
+            return(
+                <View style={styles.content}>
+                    <Text style={styles.body}>{section.content}</Text>
+                </View>
+            )
+        }
         return (
             <View style={styles.content}>
                 <Text style={styles.body}>{section.content}</Text>
-                <ImageBackground style={styles.bodyImage} source={section.image}>
-                    {/*<SocialSpeaker twitter={section.social.twitter}/>*/}
+                <ImageBackground style={styles.bodyImage} source={section.image} imageStyle={{ resizeMode: 'stretch'}}>
+                    <SocialSpeaker twitter={section.social.twitter} instagram={section.social.instagram}
+                                   facebook={section.social.facebook}/>
                 </ImageBackground>
             </View>
-        );
+        )
     };
 
     _updateSections = activeSections => {
@@ -179,7 +286,7 @@ export default class Schedule extends Component {
                 <Accordion
                     sections={SECTIONS}
                     activeSections={this.state.activeSections}
-
+                    renderSectionTitle={this._renderSectionTitle}
                     renderHeader={this._renderHeader}
                     renderContent={this._renderContent}
                     onChange={this._updateSections}
@@ -207,10 +314,10 @@ var SECTIONS = [
     {
         content: "No content here",
         date: "Sun, 17 November 2018",
-        image: require("../assets/image/eventmain.png"),
+        image: undefined,
+        isHeading: true,
         order: 1,
-        social: {
-        },
+        social: {},
         speaker: "09:00 - 10:30",
         time: "09:00",
         title: "Session One"
@@ -225,14 +332,14 @@ var SECTIONS = [
         'Aside from all the wonderful people she looks forward to meeting on this journey, Carryn looks forward to changing at least one person\'s way of thinking about how they communicate as well as the opportunity to learn and grow as a human being.',
         date: "Sun, 17 November 2018",
         image: require("../assets/image/speaker-carryn-ortlepp.png"),
+        isHeading: false,
         order: 2,
         social: {
             twitter: "@carrynpeta"
         },
         speaker: "Carryn Ortlepp",
         time: "09:00",
-        title: "TED, TEDx and why there's " + '\n' +
-        "magic in the room",
+        title: "TED, TEDx and why there's magic in the room",
     },
     {
         content: 'Gill Grose describes herself simply as a sixty-something serial volunteer who is a book, travel and tree lover, but there is far more to her story.\n' +
@@ -244,24 +351,23 @@ var SECTIONS = [
         'Unlike many of our speakers who applied for the opportunity to speak at our main event on Saturday, 17 November, Gill was nominated by a couchsurfer. We are very happy that she very bravely thought, what the heck… she\'d step up to the challenge!',
         date: "Sun, 17 November 2018",
         image: require("../assets/image/speaker-gill-grose.png"),
+        isHeading: false,
         order: 3,
         speaker: "Gill Grose",
         time: "09:30",
         title: "For the love of books",
-        social: {
-        }
+        social: {}
     },
     {
         content: "Penni Cox is a well-established psychologist spending the past decade working in a variety of contexts, from patient clinics to private practice, and the humanitarian sector. These roles in the world of psychology contributed to her vast experience in working with addiction, adolescents, as well as family and organisational systems. Additionally, Cox has devoted much of her time taking part in missions with humanitarian organizations, both in Africa and abroad including Liberia, Pakistan and Afghanistan. These missions supplied her with the opportunity to form part of health teams working with issues such as the Ebola outbreak and Xenophobia attacks.",
         date: "17 November 2018",
         image: require("../assets/image/speaker-penni-cox.png"),
+        isHeading: false,
         order: 4,
         speaker: "Penni Cox",
         time: "10:00",
         title: "Be curious. Be connected",
-        social: {
-
-        }
+        social: {}
     },
     {
         content: 'The talented Preston Jongbloed loves people, something that shines through in every project he takes on whether it is public speaking or presenting on the radio. He currently dedicates much of his time to the Refocus Foundation, an organisation which specialises in working with youth at risk. This opportunity has provided him a platform to inspire troubled youth and prisoners, and change their lives for the better.\n' +
@@ -272,6 +378,7 @@ var SECTIONS = [
         date: "17 November 2018",
         image: require("../assets/image/speaker-preston-jongbloed.png"),
         order: 5,
+        isHeading: false,
         speaker: "Preston Jongbloed",
         time: "10:15",
         title: "Mentorship Rebooted",
@@ -282,10 +389,10 @@ var SECTIONS = [
     {
         content: "No content here",
         date: "Sun, 17 November 2018",
-        image: require("../assets/image/eventmain.png"),
+        image: undefined,
+        isHeading: true,
         order: 6,
-        social: {
-        },
+        social: {},
         speaker: "11:00 - 12:30",
         time: "11:00",
         title: "Session Two"
@@ -298,6 +405,7 @@ var SECTIONS = [
         'With an arm’s length list of highly respected accolades including being selected as the top 200 Mail and Guardian Young South Africans in 2016 under the education sector; a Mandela Washington Fellow 2017; receiving an Honorary Award from the KwaZulu-Natal Province in the division of Science Research and Entrepreneurship given by the KZN Young Achievers Awards and eThekwini Municipality; and winning the Gagasi FM – SHERO Award for the Science and Technology category. She is also a Greenmatter Fellow for her academic research in climate change and agriculture and has been listed as the Top 50 most Inspiring Women in Tech in South Africa in 2017, which is an award issued by the Kingdom of the Netherlands and South Africa.',
         date: "Sun, 17 November 2018",
         image: require("../assets/image/speaker-ndoni-mcunu.png"),
+        isHeading: false,
         order: 7,
         social: {
             twitter: "bwis_sa"
@@ -313,6 +421,7 @@ var SECTIONS = [
         date: "Sun, 17 November 2018",
         image: require("../assets/image/speaker-Adewale-Adejumo.png"),
         order: 7,
+        isHeading: false,
         social: {
             twitter: "Waleadejumo"
         },
@@ -333,8 +442,9 @@ var SECTIONS = [
         date: "Sun, 17 November 2018",
         image: require("../assets/image/speaker-lauren jacobs.png"),
         order: 7,
+        isHeading: false,
         social: {
-            twitter: "profuselyprofound"
+            instagram: "profuselyprofound"
         },
         speaker: "Lauren Jacobs",
         time: "11:45",
@@ -349,6 +459,7 @@ var SECTIONS = [
         date: "Sun, 17 November 2018",
         image: require("../assets/image/speaker-tegan-phillips.png"),
         order: 7,
+        isHeading: false,
         social: {
             twitter: "Unclippd"
         },
@@ -359,10 +470,10 @@ var SECTIONS = [
     {
         content: "No content here",
         date: "Sun, 17 November 2018",
-        image: require("../assets/image/eventmain.png"),
+        image: undefined,
+        isHeading: true,
         order: 6,
-        social: {
-        },
+        social: {},
         speaker: "14:00 - 15:30",
         time: "14:00",
         title: "Session Three"
@@ -371,6 +482,7 @@ var SECTIONS = [
         content: 'Dr Nicki Spies is a corporate coach, trainer, facilitator, gender discourse analyst and narrative practitioner. She’s inspired by observing positive change in individuals, seeing them own who they are and being more comfortable with their sexuality and in their relationships. In her PhD research she focussed on how we construct our sexuality and how to navigate sexually unhappy marriages. With this in mind Nicki is excited about the platform TEDxCapeTown provides to start new conversations around sexuality, a space for audiences to ‘Pause & Effect’ how this can benefit and support relationships.',
         image: require("../assets/image/speaker-nicki-spies.png"),
         order: 6,
+        isHeading: false,
         social: {
             instagram: "nicki.spies"
         },
@@ -384,6 +496,7 @@ var SECTIONS = [
         'Jared is a well-acclaimed speaker who has spoken on behalf of Google around the world, published numerous articles, and has had the honour of speaking at the first TEDxSoweto main event. He\'s now on a crusade to raise awareness for the challenges we all face with AI and automation, to ensure we\'re well prepared to not only survive, but to thrive in this new technological age.',
         image: require("../assets/image/speaker-jared-molko.png"),
         order: 6,
+        isHeading: false,
         social: {
             twitter: "Jared_Molko"
         },
@@ -399,6 +512,7 @@ var SECTIONS = [
         'The opportunity to speak at this year’s TEDxCapeTown main event is an exciting one for Cindy, who not only aims to inspire more young people to see the impact of the smallest actions, but hopes to spread the message far and wide that we can all be part of creating change in our communities. A sentiment we can all learn from and adopt.',
         image: require("../assets/image/speaker-cindy-mkaza-siboto.png"),
         order: 6,
+        isHeading: false,
         social: {
             twitter: "Emagqabini"
         },
@@ -412,6 +526,7 @@ var SECTIONS = [
         'As a strategic thinking facilitator and team alignment expert, she works with organisations and teams across South Africa to help align strategic direction, solve old problems and uncover new ideas. Above all, she is passionate about changing South Africa, one idea at a time.',
         image: require("../assets/image/speaker-verity-price.png"),
         order: 6,
+        isHeading: false,
         social: {
             twitter: "helloverity"
         },
@@ -422,10 +537,10 @@ var SECTIONS = [
     {
         content: "No content here",
         date: "Sun, 17 November 2018",
-        image: require("../assets/image/eventmain.png"),
+        image: undefined,
+        isHeading: true,
         order: 6,
-        social: {
-        },
+        social: {},
         speaker: "16:00 - 17:00",
         time: "16:00",
         title: "Session Four"
@@ -436,6 +551,7 @@ var SECTIONS = [
         'Being so passionate about helping people feel more in control of their money (and as a result more in control of their lives) she’s excited to be using the TEDxCapeTown stage and platform to reach a wider audience while at the same time refining her message and story.',
         date: "Sun, 17 November 2018",
         image: require("../assets/image/speaker-Sam.png"),
+        isHeading: false,
         order: 6,
         social: {
             twitter: "beckbessinger"
@@ -455,6 +571,7 @@ var SECTIONS = [
         date: "Sun, 17 November 2018",
         image: require("../assets/image/speaker-ruth-Hall.png"),
         order: 6,
+        isHeading: false,
         social: {
             twitter: "RuthHallPLAAS"
         },
@@ -471,6 +588,7 @@ var SECTIONS = [
         date: "Sun, 17 November 2018",
         image: require("../assets/image/speaker-rich-mulholland.png"),
         order: 6,
+        isHeading: false,
         social: {
             twitter: "RichMulholland"
         },
@@ -493,7 +611,8 @@ const icons = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column'
+        flexDirection: 'column',
+        backgroundColor: '#171717'
     },
     programHeader: {
         flex: 1,
@@ -528,6 +647,7 @@ const styles = StyleSheet.create({
         height: 60 * PixelRatio.get(),
         backgroundColor: '#171717',
         paddingHorizontal: 10 * PixelRatio.get(),
+        // elevation: 20
     },
     headerActive: {
         flexDirection: 'row',
@@ -571,6 +691,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     headerText: {
+        flex: 4,
         fontFamily: 'HelveticaNeueBold',
         flexWrap: 'wrap',
         color: '#fff',
@@ -579,7 +700,7 @@ const styles = StyleSheet.create({
         letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.31),
     },
     subHeaderText: {
-        fontFamily: 'HelveticaNeueMedium',
+        fontFamily: 'HelveticaNeue',
         letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.19),
         lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
         color: '#fff',
@@ -594,27 +715,30 @@ const styles = StyleSheet.create({
         letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.31),
     },
     subHeaderTextActive: {
-        fontFamily: 'HelveticaNeueMedium',
+        fontFamily: 'HelveticaNeue',
         letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.19),
         lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
         color: '#000',
         fontSize: PixelRatio.getPixelSizeForLayoutSize(7.5),
     },
     icon: {
-        marginLeft: 'auto',
+        flex: 0.5,
+        alignItems: 'center',
+        justifyContent: 'center',
         left: 5 * PixelRatio.get(),
+        // right: 5 * PixelRatio.get(),
     },
     spacer: {
         padding: 5 * PixelRatio.get()
     },
     content: {
         backgroundColor: '#f8f8f8',
-        flex: 1,
+        flex: 3,
         flexDirection: 'column',
 
     },
     body: {
-        fontFamily: 'HelveticaNeueMedium',
+        fontFamily: 'HelveticaNeue',
         paddingLeft: 35 * PixelRatio.get(),
         paddingRight: 15 * PixelRatio.get(),
         color: '#000',
@@ -629,10 +753,11 @@ const styles = StyleSheet.create({
         marginRight: 15 * PixelRatio.get(),
     },
     bodyImage: {
-        width: '100%',
-        height: 150 * PixelRatio.get(),
-        paddingTop: 9 * PixelRatio.get(),
-        resizeMode: 'contain',
+        // flex: 1,
+        width: 183.33 * PixelRatio.get(),
+        height: 171 * PixelRatio.get(),
+        marginTop: 9 * PixelRatio.get(),
+        // resizeMode: 'stretch',
         alignSelf: 'flex-end',
         justifyContent: 'flex-end'
 
@@ -661,7 +786,7 @@ const styles = StyleSheet.create({
     },
     programFooterText: {
         marginTop: 15 * PixelRatio.get(),
-        fontFamily: 'HelveticaNeueMedium',
+        fontFamily: 'HelveticaNeue',
         fontSize: PixelRatio.getPixelSizeForLayoutSize(8.5),
         lineHeight: PixelRatio.getPixelSizeForLayoutSize(8),
         letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.21),

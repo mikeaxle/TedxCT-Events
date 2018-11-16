@@ -61,18 +61,19 @@ const styles = StyleSheet.create({
         fontSize: PixelRatio.getPixelSizeForLayoutSize(7.5),
         letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.19),
         lineHeight: PixelRatio.getPixelSizeForLayoutSize(12),
-        fontFamily: 'HelveticaNeueMedium',
+        fontFamily: 'HelveticaNeue',
     },
     icon_container: {
         marginTop: 20 * PixelRatio.get(),
+        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
     icon: {
-        marginLeft: 8.75 * PixelRatio.get(),
-        marginRight: 8.75 * PixelRatio.get(),
+        // marginLeft: 8.75 * PixelRatio.get(),
+        marginHorizontal: 8.75 * PixelRatio.get(),
         height: 15 * PixelRatio.get(),
         width: 15 * PixelRatio.get(),
-        // resizeMode: 'contain'
+        resizeMode: 'stretch'
     }
 })

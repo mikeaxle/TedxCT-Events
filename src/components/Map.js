@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text, View, PixelRatio, StyleSheet} from 'react-native'
+import {Text, View, PixelRatio, StyleSheet, Image} from 'react-native'
 // import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
 export default class Map extends Component {
@@ -13,6 +13,7 @@ export default class Map extends Component {
                 <Text style={styles.heading}>Map</Text>
                 <Text style={styles.title}>{this.props.address}</Text>
                 <View style={styles.map}>
+                    <Image source={require('../assets/image/map1.png')} style={styles.mapImg}/>
                     {/*<MapView*/}
                         {/*provider={PROVIDER_GOOGLE} // remove if not using Google Maps*/}
                         {/*style={styles.mapView}*/}
@@ -35,9 +36,7 @@ export default class Map extends Component {
 const styles = StyleSheet.create({
     container: {
         marginTop: 15 * PixelRatio.get(),
-        flex: 1,
         flexDirection: 'column',
-        backgroundColor: 'teal'
     },
     heading: {
         fontFamily: 'HelveticaNeueBold',
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
         letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.31)
     },
     title: {
-        fontFamily: 'HelveticaNeueMedium',
+        fontFamily: 'HelveticaNeue',
         paddingTop: 7 * PixelRatio.get(),
         paddingBottom: 10 * PixelRatio.get(),
         fontSize: PixelRatio.getPixelSizeForLayoutSize(6.5),
@@ -55,11 +54,17 @@ const styles = StyleSheet.create({
 
     },
     map: {
-        ...StyleSheet.absoluteFillObject,
+        // ...StyleSheet.absoluteFillObject,
         width: '100%',
         height: 157.5 * PixelRatio.get(),
         justifyContent: 'flex-end',
         alignItems: 'center',
+        elevation: 15,
+        backgroundColor: 'red'
+    },
+    mapImg: {
+        width: '100%',
+        height: '100%',
     },
     mapView: {
         ...StyleSheet.absoluteFillObject,

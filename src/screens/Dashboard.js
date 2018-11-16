@@ -6,12 +6,13 @@
 
 
 import React, {Component} from 'react'
-import {View, Text, Image, StyleSheet, PixelRatio, ScrollView, FlatList, Alert, Button, TouchableHighlight} from 'react-native'
+import {View, Text, Image, StyleSheet, PixelRatio, ScrollView, StatusBar } from 'react-native'
 import firebase from 'react-native-firebase';
 import MainEvent from '../components/MainEvent'
 import SalonEvent from '../components/SalonEvent'
 import Social from '../components/Social'
 import DesignedBy from '../components/DesignedBy'
+import AutoHeightImage from "react-native-auto-height-image/autoHeightImage";
 
 export default class Dashboard extends Component {
 
@@ -129,8 +130,9 @@ export default class Dashboard extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
+                    <StatusBar backgroundColor={'#e62b1e'}/>
                     <View style={styles.header}>
-                        <Image source={header} style={styles.header_img}/>
+                        <AutoHeightImage source={header} style={styles.header_img} width={100 * PixelRatio.get()}/>
                     </View>
 
                     { this.showMainEvent() }
@@ -168,9 +170,9 @@ const styles = StyleSheet.create({
         margin: 15 * PixelRatio.get()
     },
     header_img: {
-        height: (32 * PixelRatio.get()) * 1.2,
-        width: (91 * PixelRatio.get()) * 1.2,
-        resizeMode: 'contain'
+        // height: (32 * PixelRatio.get()) * 1.2,
+        // width: (91 * PixelRatio.get()) * 1.2,
+        // resizeMode: 'contain'
     },
     list_container: {
         paddingLeft: 15 * PixelRatio.get(),

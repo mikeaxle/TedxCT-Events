@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from 'react'
-import { TouchableHighlight, Text, View, StyleSheet, PixelRatio, Linking } from 'react-native'
+import {TouchableHighlight, Text, View, StyleSheet, PixelRatio, Linking, TouchableNativeFeedback} from 'react-native'
 
 let color = 'white'
 export default class DesignedBy extends Component {
@@ -18,9 +18,13 @@ export default class DesignedBy extends Component {
     render(){
         return(
             <View style={styles.container}>
-                <TouchableHighlight style={styles.button} onPress={() => Linking.openURL('https://www.nowboarding.co.za/contact/')}>
-                    <Text style={styles.button_text}>I want an app like this one</Text>
-                </TouchableHighlight>
+                <TouchableNativeFeedback background={TouchableNativeFeedback.SelectableBackground()}
+                                         onPress={() => Linking.openURL('https://www.nowboarding.co.za')}>
+                    <View style={styles.button}>
+                        <Text style={styles.button_text}>I want an app like this one</Text>
+                    </View>
+
+                </TouchableNativeFeedback>
                 <Text style={[styles.normalText, { color: this.props.color }]}>Designed by <Text style={[styles.designText, { color: this.props.color }]}>Now Boarding Digital</Text></Text>
             </View>
         )
@@ -33,7 +37,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         marginTop: 15 * PixelRatio.get(),
-        fontFamily: 'HelveticaNeueMedium',
+        fontFamily: 'HelveticaNeue',
     },
     button: {
         marginBottom: 5 * PixelRatio.get(),
@@ -53,7 +57,7 @@ const styles = StyleSheet.create({
         color: '#e62b1e',
     },
     normalText: {
-        fontFamily: 'HelveticaNeueMedium',
+        fontFamily: 'HelveticaNeue',
         fontSize: PixelRatio.getPixelSizeForLayoutSize(5.5),
         letterSpacing: PixelRatio.getPixelSizeForLayoutSize(-0.09),
 
