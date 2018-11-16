@@ -13,15 +13,16 @@ import DesignedBy from '../components/DesignedBy'
 export default class Partners extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            heroImage: require('../assets/image/eventmain.png')
+        }
     }
 
     render() {
-        const {navigation} = this.props
         return (
-
             <View style={styles.container}>
                 <ScrollView>
-                    <Image style={styles.hero_image} source={navigation.state.params.item.image}/>
+                    <Image style={styles.hero_image} source={this.state.heroImage}/>
 
                     <Sponsors/>
                     <Social/>

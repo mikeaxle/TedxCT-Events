@@ -14,7 +14,7 @@ import {
     ScrollView,
     Linking,
     Platform,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
 } from 'react-native'
 import Map from '../components/Map'
 import Social from '../components/Social'
@@ -23,6 +23,10 @@ import DesignedBy from '../components/DesignedBy'
 export default class About extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            heroImage: require('../assets/image/eventmain.png')
+
+        }
     }
 
     openCalendar() {
@@ -38,7 +42,7 @@ export default class About extends Component {
         return (
             <ScrollView>
                 <View style={styles.container}>
-                    <Image style={styles.hero_image} source={navigation.state.params.item.image}/>
+                    <Image style={styles.hero_image} source={this.state.heroImage}/>
                     <View style={styles.meta_container}>
 
                         {/* date */}
@@ -46,8 +50,8 @@ export default class About extends Component {
                             <Image style={styles.icon} source={icons.calendar}/>
                             <View style={styles.spacer}/>
                             <View style={styles.icon_container_text_container}>
-                                <Text style={styles.meta_heading}>{navigation.state.params.item.date}</Text>
-                                <Text style={styles.meta_paragraph}>08:30 - 17:00</Text>
+                                <Text style={styles.meta_heading}>{navigation.state.params.item.date} </Text>
+                                <Text style={styles.meta_paragraph}>{navigation.state.params.item.time}</Text>
                                 <TouchableWithoutFeedback onPress={() => this.openCalendar()}>
                                     <Text style={styles.meta_link}>Add to Calendar</Text>
                                 </TouchableWithoutFeedback>
@@ -60,7 +64,7 @@ export default class About extends Component {
                             <View style={styles.spacer}/>
                             <View style={styles.icon_container_text_container}>
                                 <Text style={styles.meta_heading}>{navigation.state.params.item.venue}</Text>
-                                <Text style={styles.meta_paragraph}>40 Dock Road, Cape Town</Text>
+                                <Text style={styles.meta_paragraph}>{navigation.state.params.item.venueAddress}</Text>
                             </View>
                         </View>
 
@@ -69,9 +73,8 @@ export default class About extends Component {
                             <Image style={styles.icon} source={icons.ticket}/>
                             <View style={styles.spacer}/>
                             <View style={styles.icon_container_text_container}>
-                                <Text style={styles.meta_heading}>R500</Text>
-                                <Text style={styles.meta_paragraph}>Tickets include: a full day of inspiring talks. A
-                                    nutitious lunch and healthy snacks.</Text>
+                                <Text style={styles.meta_heading}>R{navigation.state.params.item.ticketPrice}</Text>
+                                <Text style={styles.meta_paragraph}>{navigation.state.params.item.ticketDescription}</Text>
                                 <TouchableWithoutFeedback
                                     onPress={() => Linking.openURL(navigation.state.params.item.buyTicketsLink)}>
                                     <Text style={styles.meta_link}>Buy Tickets</Text>

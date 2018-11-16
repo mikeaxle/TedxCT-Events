@@ -6,7 +6,8 @@
 
 
 import React, {Component} from 'react'
-import {View, Text, Image, StyleSheet, PixelRatio, ScrollView, FlatList, Alert, Button} from 'react-native'
+import {View, Text, Image, StyleSheet, PixelRatio, ScrollView, FlatList, Alert, Button, TouchableHighlight} from 'react-native'
+import firebase from 'react-native-firebase';
 import MainEvent from '../components/MainEvent'
 import SalonEvent from '../components/SalonEvent'
 import Social from '../components/Social'
@@ -14,8 +15,72 @@ import DesignedBy from '../components/DesignedBy'
 
 export default class Dashboard extends Component {
 
+    // constructor
     constructor(props) {
         super(props)
+
+        // get firestore collection
+        this.ref = firebase.firestore().collection('Events')
+
+        // unsubscribe object
+        this.unsubscribe = null
+
+        // init state
+        this.state = {
+            events: [],
+            loading: true,
+            mainEvent: null
+        }
+
+    }
+
+    // when component mounts
+    componentDidMount(){
+        this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
+    }
+
+    // when component unmounts
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
+
+
+    /**
+     * @method                  onCollectionUpdate
+     * @description             updates UI while listening for changes on firebase
+     * @param querySnapshot
+     */
+    onCollectionUpdate = (querySnapshot) => {
+
+        // local temp variables
+        let events = []
+        let event = null
+        let mainEvent = null
+
+        // iterate through results
+        querySnapshot.forEach((doc) => {
+            // check if main event
+            if(doc.id === 'bt2MNT60J278AACAfgSm') {
+                // assign main event + id
+                mainEvent = doc.data()
+                mainEvent.id = doc.id
+            } else {
+                // assign salon event + 9
+                event = doc.data()
+                event.id = doc.id
+
+                // add to events array
+                events.push(event)
+            }
+
+        })
+
+        // set state
+        this.setState({
+            events,
+            mainEvent,
+            loading: false,
+        })
     }
 
     /**
@@ -47,6 +112,15 @@ export default class Dashboard extends Component {
         index.toString()
     )
 
+    showMainEvent(){
+        if(this.state && this.state.mainEvent) {
+            return <MainEvent item={this.state.mainEvent} onPressItem={() => this.props.navigation.navigate('Event', {item: this.state.mainEvent})}/>
+        } else {
+            return null
+        }
+
+    }
+
     /**
      * Returns JSX
      * @returns {*}
@@ -58,12 +132,14 @@ export default class Dashboard extends Component {
                     <View style={styles.header}>
                         <Image source={header} style={styles.header_img}/>
                     </View>
-                    <MainEvent item={mainEvent} onPressItem={() => this.props.navigation.navigate('Event', {item: mainEvent})}/>
+
+                    { this.showMainEvent() }
+
                     {/*<FlatList*/}
-                        {/*contentContainerStyle={styles.list_container}*/}
-                        {/*data={dummyData}*/}
-                        {/*renderItem={({item}) => this._renderItem({item})}*/}
-                        {/*keyExtractor={(item, index) => this._keyExtractor(item, index)}/>*/}
+                    {/*contentContainerStyle={styles.list_container}*/}
+                    {/*data={dummyData}*/}
+                    {/*renderItem={({item}) => this._renderItem({item})}*/}
+                    {/*keyExtractor={(item, index) => this._keyExtractor(item, index)}/>*/}
                     <Social color={'black'}/>
                     <View style={{paddingHorizontal: 15 * PixelRatio.get(), marginBottom: 24.5 * PixelRatio.get()}}>
                         <DesignedBy color={'black'}/>
@@ -74,71 +150,7 @@ export default class Dashboard extends Component {
     }
 }
 
-// main event
 
-// dummy data
-var dummyData = [
-    {
-        id: '1',
-        image: require('../assets/image/event-main.png'),
-        title: 'Pause & Effect',
-        date: '11 November 2018',
-        venue: 'Avenue V&A Waterfront',
-        location: {
-            latitude: -33.907835,
-            longitude: 18.4168136
-        },
-        buyTicketsLink: 'https://www.quicket.co.za/events/61870-tedxcapetownwomen-showing-up/#/',
-        text: 'Charles Darwin and John Dewey give us food for thought with these respective quotes - "It’s not the strongest of the species that survives, nor the most intelligent, but the most responsive to change; We don’t learn through experience, but rather through reflecting on experiences." \n' +
-        '\n' +
-        'Taking this as inspiration, the theme for the 2018 TEDxCapeTown main event is...\n' +
-        'Pause & Effect. View Event on Facebook.\n' +
-        '\n' +
-        'It’s been evident through socio-economic movements globally — consider#MeToo, #BlackLivesMatter, #FeesMustFall, #DataMustFall, Occupy, The Arab Spring and The Umbrella Revolution — that every action (positive or negative, big or small) causes shifts in energy and power. And this directly impacts the rate of change in our society.\n' +
-        '\n' +
-        'But there’s also power in pausing and considering before taking action, and in taking time to realise we have choices regarding why and how we develop. The result of pausing is often a more mindful approach to what happens after.\n' +
-        '\n' +
-        'We invite design thinkers, artists, activists, people managers, youth development workers, techpreneurs, mompreneurs, financial planners & more —young & more experienced, from all walks of life— to join us as we PAUSE to take EFFECT!'
-    },
-    {
-        id: '2',
-        image: require('../assets/image/event-salon.png'),
-        title: 'Oceans 2018',
-        date: '06 December 2018',
-        venue: 'V&A Waterfront',
-        buyTicketsLink: 'https://www.quicket.co.za/events/61870-tedxcapetownwomen-showing-up/#/',
-        text: 'Charles Darwin and John Dewey give us food for thought with these respective quotes - "It’s not the strongest of the species that survives, nor the most intelligent, but the most responsive to change; We don’t learn through experience, but rather through reflecting on experiences." \n' +
-        '\n' +
-        'Taking this as inspiration, the theme for the 2018 TEDxCapeTown main event is...\n' +
-        'Pause & Effect. View Event on Facebook.\n' +
-        '\n' +
-        'It’s been evident through socio-economic movements globally — consider#MeToo, #BlackLivesMatter, #FeesMustFall, #DataMustFall, Occupy, The Arab Spring and The Umbrella Revolution — that every action (positive or negative, big or small) causes shifts in energy and power. And this directly impacts the rate of change in our society.\n' +
-        '\n' +
-        'But there’s also power in pausing and considering before taking action, and in taking time to realise we have choices regarding why and how we develop. The result of pausing is often a more mindful approach to what happens after.\n' +
-        '\n' +
-        'We invite design thinkers, artists, activists, people managers, youth development workers, techpreneurs, mompreneurs, financial planners & more —young & more experienced, from all walks of life— to join us as we PAUSE to take EFFECT!'
-    },
-    {
-        id: '3',
-        image: require('../assets/image/event-salon.png'),
-        title: 'OCEANS 2018',
-        date: '06 DECEMBER 2018',
-        venue: 'V&A WATERFRONT',
-        buyTicketsLink: 'https://www.quicket.co.za/events/61870-tedxcapetownwomen-showing-up/#/',
-        text: `Charles Darwin and John Dewey give us food for thought with these respective quotes - "It’s not the strongest of the species that survives, nor the most intelligent, but the most responsive to change; We don’t learn through experience, but rather through reflecting on experiences." 
-
-Taking this as inspiration, the theme for the 2018 TEDxCapeTown main event is...
-Pause & Effect. View Event on Facebook.
-
-It’s been evident through socio-economic movements globally — consider#MeToo, #BlackLivesMatter, #FeesMustFall, #DataMustFall, Occupy, The Arab Spring and The Umbrella Revolution — that every action (positive or negative, big or small) causes shifts in energy and power. And this directly impacts the rate of change in our society.
-
-But there’s also power in pausing and considering before taking action, and in taking time to realise we have choices regarding why and how we develop. The result of pausing is often a more mindful approach to what happens after.
-
-We invite design thinkers, artists, activists, people managers, youth development workers, techpreneurs, mompreneurs, financial planners & more —young & more experienced, from all walks of life— to join us as we PAUSE to take EFFECT!`
-    },
-]
-
-var mainEvent = dummyData[0]
 
 // header image
 var header = require('../assets/logo/tedx-cptown.png')

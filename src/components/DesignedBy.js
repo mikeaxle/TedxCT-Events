@@ -18,7 +18,7 @@ export default class DesignedBy extends Component {
     render(){
         return(
             <View style={styles.container}>
-                <TouchableHighlight underlayColor={'rgba(256,256,256,0.3'} style={styles.button} onPress={() => Linking.openURL('https://www.nowboarding.co.za/contact/')}>
+                <TouchableHighlight style={styles.button} onPress={() => Linking.openURL('https://www.nowboarding.co.za/contact/')}>
                     <Text style={styles.button_text}>I want an app like this one</Text>
                 </TouchableHighlight>
                 <Text style={[styles.normalText, { color: this.props.color }]}>Designed by <Text style={[styles.designText, { color: this.props.color }]}>Now Boarding Digital</Text></Text>

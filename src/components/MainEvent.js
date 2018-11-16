@@ -13,6 +13,9 @@ import Icon from './Icon'
 export default class MainEvent extends Component {
     constructor(props){
         super(props)
+        this.state = {
+            image: require('../assets/image/eventmain.png') //require(props.item.image)
+        }
     }
 
     _onPress(){
@@ -26,7 +29,7 @@ export default class MainEvent extends Component {
     render(){
         return(
             <TouchableHighlight onPress={this._onPress.bind(this)}>
-                <ImageBackground source={this.props.item.image} style={styles.container}>
+                <ImageBackground source={ this.state.image } style={styles.container}>
                     <View style={styles.icon_container}>
                         <Icon image={mainEventIcon} text={this.props.item.date.toUpperCase()} />
                         <View style={styles.spacer}></View>
@@ -39,7 +42,6 @@ export default class MainEvent extends Component {
 }
 
 // images
-var mainEventImage = require('../assets/image/event-main.png')
 var mainEventIcon = require('../assets/icn/date-small-red.png')
 var mainEventIcon2 = require('../assets/icn/location-small-red.png')
 
